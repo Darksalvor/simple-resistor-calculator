@@ -103,7 +103,7 @@ try:
 except FileNotFoundError:
     image_label = tk.Label(
         image_frame,
-        text="找不到圖片，請確認 images/resistor.png 是否存在",
+        text="找不到圖片，請確認 resistor.png 是否和程式放在同一個資料夾",
         font=("Microsoft JhengHei", 14),
         fg="red",
         bg="white"
