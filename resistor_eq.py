@@ -14,20 +14,43 @@ def calculate():
         R4 = float(entry_R4.get())
         R5 = float(entry_R5.get())
 
-        if R1 <= 0 or R2 <= 0 or R3 <= 0 or R4 <= 0 or R5 <= 0:
+        if (R1 == 0 and R2 == 0) or (R3 == 0 and R4 == 0) :
             result_label.config(
                 text=f"等效電阻 Req = {Req:.2f} Ω",
                 fg="#1B5E20"
             )
-
+            print(f"Req={Req:.2f}")
+        elif R1<0 or R2<0 or R3<0 or R4<0 or R5<0 :
+            messagebox.showerror("輸入錯誤", "請輸入正數，例如 100、220、4.7")
         else:
-            R_th=R1*R2/(R1+R2)+R3*R4/(R3+R4)
-            V_th=V*R2/(R1+R2)-V*R4/(R3+R4)
-            I_th=V_th*R5/(R_th+R5)
+            R_th=R1*R2/(R1+R2)+R3*R4/(R3+R4)#成立
+            V_th=V*R2/(R1+R2)-V*R4/(R3+R4)#成立
+            I_th=V_th*R5/(R_th+R5)#成立
 
-            V_A=(R1*R2/(R1+R2))*(V/R1-I_th)
-            V_B=(R3*R4/(R3+R4))*(V/R3+I_th)
-            Req=V/((V-V_A)/R1+(V-V_B)/R3)
+
+
+            if R1 == 0 and R3==0:
+                V_A=V
+                V_B =V
+            elif R1==0 and  R3!=0:
+                V_A=V
+                V_B =V*(R4/(R4+R5))
+            elif R1!=0 and R3==0:
+                V_A=V*(R2/(R2+R5))
+                V_B=V
+            else:
+                V_A=((V/R1)-I_th)*(R1*R2/(R1+R2))
+                V_B=((V/R3)+I_th)*(R3*R4/(R3+R4))
+
+
+            if R1 == 0 and R3==0:
+                Req=(R2*R4)/(R2+R4)#有效
+            elif R1==0 and  R3!=0:
+                Req = (R5+R4)*R2/(R5+R4+R2)
+            elif R1!=0 and R3==0:
+                Req =(R5+R2)*R4/(R5+R4+R2)
+            else:
+                Req = V / ((V - V_A) / R1 + (V - V_B) / R3)#有效
             print(f"Req={Req:.2f}")
 
             #顯示於介面上
