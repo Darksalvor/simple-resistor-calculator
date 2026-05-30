@@ -63,10 +63,9 @@ window.title("電阻等效計算器")
 window.geometry("900x750")
 window.configure(bg="#F4F6F8")
 
-# =========================
-# 標題區
-# =========================
 
+
+# 標題區
 title_label = tk.Label(
     window,
     text="電阻等效計算器",
@@ -87,12 +86,11 @@ subtitle_label.pack()
 
 
 # 圖片區
-
 image_frame = tk.Frame(window, bg="white", bd=2, relief="groove")
 image_frame.pack(pady=15)
 
 BASE_DIR = Path(__file__).resolve().parent
-image_path = BASE_DIR /  "resistor.png"
+image_path = BASE_DIR /  "resistor.png"  #圖片會放在和程式同一個資料夾裡面
 
 try:
     image = Image.open(image_path)
